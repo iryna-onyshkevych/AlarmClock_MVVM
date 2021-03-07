@@ -1,0 +1,34 @@
+﻿<Window x:Class="MVVMDatagrid.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVMDatagrid"
+        mc:Ignorable="d"
+       Title="MainWindow" Height="550" Width="525" >
+    <Window.Resources>
+        <ResourceDictionary>
+            <local:MyViewModel x:Key="viewmodel"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel DataContext="{StaticResource viewmodel}">
+        <Label>Seconds</Label>
+        <TextBox Text="{Binding Seconds}"/>
+        <Label>Minutes</Label>
+        <TextBox Text="{Binding Minutes}"/>
+        <Label>Hours</Label>
+        <TextBox Text="{Binding Hours}"/>
+        <Label>Message</Label>
+        <TextBox Text="{Binding Message}"/>
+        <TextBox Text="{Binding IsCalled}"/>
+        <DatePicker SelectedDate="{Binding Path = Date, Mode=TwoWay}"/>
+        <Button Content="Add to datagrid" Command="{Binding SaveCommand}"/>
+        <Button Content="Savelist" Command="{Binding SaveListCommand}"/>
+        <Button Content="showlist" Command="{Binding ShowListCommand}"/>
+        <Button Command="{Binding RemoveCommand}"
+        CommandParameter="{Binding SelectedPhone}">-</Button>
+        <Label Name="TimeLabel" FontSize="48" FontFamily="Constantia"  Content="{Binding Path=CurrentTime}" HorizontalAlignment="Right" Foreground="DarkGreen" VerticalAlignment="top" Margin="10,40,10,10" />
+
+        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding EmployeeCollection}"   SelectedItem="{Binding SelectedPhone}" IsReadOnly="True"/>
+    </StackPanel>
+</Window>
