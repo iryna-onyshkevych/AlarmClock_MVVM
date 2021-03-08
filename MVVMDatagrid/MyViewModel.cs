@@ -216,7 +216,23 @@ namespace MVVMDatagrid
                   }));
             }
         }
+        private RelayCommand musicoffCommand;
+        public RelayCommand MusicOffCommand
+        {
+            get
+            {
+                return musicoffCommand ??
+                  (musicoffCommand = new RelayCommand(obj =>
+                  {
+                      sound.Stop();
+                      //EmployeeCollection.Add(new Employee { Seconds = Seconds, Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
 
+                      //Phone phone = new Phone();
+                      //Phones.Insert(0, phone);
+                      //SelectedPhone = phone;
+                  }));
+            }
+        }
         //public RelayCommand SaveCommand
         //{
         //    get
@@ -309,8 +325,62 @@ namespace MVVMDatagrid
                           reader.Close();
                           //dataGrid.ItemsSource = alarmclock;
                       }
+                  }));
+               
+            }
+        }
+        private RelayCommand snoozeCommand;
+        public RelayCommand SnoozeCommand
+        {
+            get
+            {
+                return snoozeCommand ??
+                  (snoozeCommand = new RelayCommand(obj =>
+                  {
+                      SnoozeWindow w = new SnoozeWindow();
+                      w.ShowDialog();
+                      //WindowService service = new WindowService();
+                      //service.CreateWindow();
+                      MessageBox.Show(((SnoozeViewModel)w.DataContext).DelayHours.ToString());
+                      DateTime currentTime = DateTime.Now;
+                      EmployeeCollection.Add(new Employee()
+                      {
+                          Minutes = currentTime.Minute + ((SnoozeViewModel)w.DataContext).DelayMinutes,
+                          Seconds = currentTime.Second + ((SnoozeViewModel)w.DataContext).DelaySeconds,
+                          Hours = currentTime.Hour + ((SnoozeViewModel)w.DataContext).DelayHours,
+                          Date = currentTime.Date,
+                      });
+                      sound.Stop();
+                      MessageBox.Show("Alarm Clock is snoozed!");
                   },
-                (obj) => EmployeeCollection.Count > 0));
+                 (obj) => EmployeeCollection.Count > 0));
+            }
+        }
+        private RelayCommand updateCommand;
+        public RelayCommand UpdateCommand
+        {
+            get
+            {
+                return updateCommand ??
+                  (updateCommand = new RelayCommand(obj =>
+                  {
+                      Employee phone = obj as Employee;
+
+                      UpdateWindow w = new UpdateWindow();
+                      w.ShowDialog();
+                      //WindowService service = new WindowService();
+                      //service.CreateWindow();
+                      MessageBox.Show(((UpdateViewModel)w.DataContext).NewHours.ToString());
+
+                      phone.Hours = ((UpdateViewModel)w.DataContext).NewHours;
+                      phone.Minutes = ((UpdateViewModel)w.DataContext).NewMinutes;
+                      phone.Seconds = ((UpdateViewModel)w.DataContext).NewSeconds;
+                      phone.Date = ((UpdateViewModel)w.DataContext).NewDate;
+                      phone.Message = ((UpdateViewModel)w.DataContext).NewMessage;
+
+
+                  },
+                 (obj) => EmployeeCollection.Count > 0));
             }
         }
     }

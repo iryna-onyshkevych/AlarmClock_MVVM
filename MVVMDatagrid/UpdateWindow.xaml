@@ -1,0 +1,40 @@
+﻿<Window x:Class="MVVMDatagrid.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVMDatagrid"
+        mc:Ignorable="d"
+       Title="UpdateWindow" Height="250" Width="300">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Button.FontFamily" Value="Constantia"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Button.FontFamily" Value="Constantia"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0">Hour</Label>
+        <TextBox Grid.Row="0" Name="alhour" Margin="60,0,0,0" Text="{Binding NewHours}" ></TextBox>
+        <Label Grid.Row="1">Minute</Label>
+        <TextBox Grid.Row="1" Name="alminute" Margin="60,0,0,0" Text="{Binding NewMinutes}" ></TextBox>
+        <Label Grid.Row="2">Second</Label>
+        <TextBox Grid.Row="2"  Margin="60,0,0,0" Text="{Binding NewSeconds}" ></TextBox>
+        <Label Grid.Row="3">Day</Label>
+        <TextBox Grid.Row="3" Name="alday" Margin="60,0,0,0" Text="{Binding NewDate}" ></TextBox>
+        <Label Grid.Row="4">Message</Label>
+        <TextBox Grid.Row="4" Name="almessage" Margin="60,0,0,0" Text="{Binding NewMessage}" ></TextBox>
+        <Button Grid.Row="5" Name="Submit"  Background="AliceBlue" FontFamily="Constantia">OK</Button>
+    </Grid>
+
+</Window>

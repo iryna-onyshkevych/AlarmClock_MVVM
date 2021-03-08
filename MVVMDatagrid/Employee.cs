@@ -9,7 +9,7 @@ namespace MVVMDatagrid
 {
     public class Employee : INotifyPropertyChanged
     {
-        #region implement INotifyPropertyChanged
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string name)
@@ -19,19 +19,20 @@ namespace MVVMDatagrid
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        #endregion
+        
 
-        private int _seconds;
-
-        //use to binding textbox
-        public int Seconds
+        
+       
+        private int _hours;
+        //use to bind textbox
+        public int Hours
         {
-            get { return _seconds; }
+            get { return _hours; }
             set
             {
-                if (_seconds != value)
+                if (_hours != value)
                 {
-                    _seconds = value;
+                    _hours = value;
                 }
             }
         }
@@ -48,29 +49,18 @@ namespace MVVMDatagrid
                 }
             }
         }
-        //private int _employeeName;
-        ////use to binding textbox
-        //public int EmployeeName
-        //{
-        //    get { return _employeeName; }
-        //    set
-        //    {
-        //        if (_employeeName != value)
-        //        {
-        //            _employeeName = value;
-        //        }
-        //    }
-        //}
-        private int _hours;
-        //use to bind textbox
-        public int Hours
+
+        private int _seconds;
+
+        //use to binding textbox
+        public int Seconds
         {
-            get { return _hours; }
+            get { return _seconds; }
             set
             {
-                if (_hours != value)
+                if (_seconds != value)
                 {
-                    _hours = value;
+                    _seconds = value;
                 }
             }
         }

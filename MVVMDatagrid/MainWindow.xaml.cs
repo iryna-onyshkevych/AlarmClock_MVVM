@@ -23,7 +23,7 @@ namespace MVVMDatagrid
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = new MyViewModel();
+            DataContext = new MyViewModel();
 
         }
     }
