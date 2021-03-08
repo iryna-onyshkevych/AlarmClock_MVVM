@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MVVMDatagrid
+namespace MVVMAlarmClock
 {
     public class SnoozeViewModel : INotifyPropertyChanged
     {
@@ -78,9 +78,9 @@ namespace MVVMDatagrid
                       //DelayHours = DelayHours;
                       //DelayMinutes = DelayMinutes;
                       //DelaySeconds = DelaySeconds;
-                      SnoozeWindow w = new SnoozeWindow();
-                      w.DataContext = this;
-                      w.Close();
+                      //this.
+                      //w.DataContext = this;
+                      //w.Close();
                       //WindowService service = new WindowService();
                       //service.CloseWindow();
                   }));

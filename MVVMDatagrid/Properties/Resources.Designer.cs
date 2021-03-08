@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVVMDatagrid.Properties {
+namespace MVVMAlarmClock.Properties {
     using System;
     
     

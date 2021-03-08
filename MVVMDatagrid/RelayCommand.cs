@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MVVMDatagrid
+namespace MVVMAlarmClock
 {
     public class RelayCommand : ICommand
     {

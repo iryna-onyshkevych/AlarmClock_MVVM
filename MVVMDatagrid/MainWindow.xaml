@@ -1,9 +1,9 @@
-﻿<Window x:Class="MVVMDatagrid.MainWindow"
+﻿<Window x:Class="MVVMAlarmClock.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MVVMDatagrid"
+        xmlns:local="clr-namespace:MVVMAlarmClock"
         mc:Ignorable="d"
        Title="MainWindow" Height="450" Width="700" >
         <Window.Resources>
@@ -45,18 +45,18 @@
             <StackPanel Orientation="Horizontal" Height="90" Margin="0,0,0,0.4" Background="LightBlue" >
 
                 <StackPanel VerticalAlignment="Center" Margin="5">
-                    <Button x:Name="btnHoursUp" Margin="5" Height="18" FontFamily="Marlett" FontSize="20" Content="5" Width="50"  Background="Lavender"/>
-                    <Button x:Name="btnHoursDown" Margin="5" Height="18"  FontFamily="Marlett" FontSize="20" Content="6" Width="50"   Background="Lavender"/>
+                    <Button x:Name="btnHoursUp"  Command="{Binding HoursUpCommand}" Margin="5" Height="18" FontFamily="Marlett" FontSize="20" Content="5" Width="50"  Background="Lavender" />
+                    <Button x:Name="btnHoursDown"  Command="{Binding HoursDownCommand}" Margin="5" Height="18"  FontFamily="Marlett" FontSize="20" Content="6" Width="50"   Background="Lavender"/>
                 </StackPanel>
 
-                <TextBox x:Name="Hours"  Text="{Binding Hours}" Height="38" Width="45" FontSize="23" />
+                <TextBox x:Name="hours"  Text="{Binding Hours}" Height="38" Width="45" FontSize="23" />
                 <TextBox Text=":" FontSize="28" Height="38"  Focusable="False"/>
                 <TextBox x:Name="Minutes" Height="38" Width="45" FontSize="23" Text="{Binding Minutes}" TextAlignment="Center"/>
                 <TextBox Text=":" FontSize="28" Height="38" Focusable="False"/>
                 <TextBox x:Name="Seconds"  Text="{Binding Seconds}" Height="38" Width="45" FontSize="23"  TextAlignment="Center"/>
                 <StackPanel VerticalAlignment="Center" Margin="5">
-                    <Button x:Name="btnMinutesUp" Margin="5" Height="18" Width="50" FontFamily="Marlett" FontSize="20" Content="5"  Background="Lavender"/>
-                    <Button x:Name="btnMinutesDown" Margin="5" Height="18" Width="50" FontFamily="Marlett" FontSize="20" Content="6"   Background="Lavender"/>
+                    <Button x:Name="btnMinutesUp"  Command="{Binding MinutesUpCommand}" Margin="5" Height="18" Width="50" FontFamily="Marlett" FontSize="20" Content="5"  Background="Lavender"/>
+                    <Button x:Name="btnMinutesDown" Command="{Binding MinutesDownCommand}" Margin="5" Height="18" Width="50" FontFamily="Marlett" FontSize="20" Content="6"   Background="Lavender"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

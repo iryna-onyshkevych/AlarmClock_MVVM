@@ -11,10 +11,12 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 
-namespace MVVMDatagrid
+namespace MVVMAlarmClock
 {
     public class MyViewModel : INotifyPropertyChanged
     {
+        public const int maxHours = 23;
+        public static int maxMinutes = 59;
         #region implement INotifyPropertyChanged
         readonly DispatcherTimer timer = new DispatcherTimer();
         //private DispatcherTimer timer;
@@ -66,7 +68,7 @@ namespace MVVMDatagrid
         {
 
             DateTime currentTime = DateTime.Now;
-            foreach (var al in _employeeCollection.ToList<Employee>())
+            foreach (var al in _employeeCollection.ToList<AlarmClockModel>())
             {
 
                 if (currentTime.Hour == al.Hours && currentTime.Minute == al.Minutes && currentTime.Date == al.Date && currentTime.Second == al.Seconds)
@@ -74,12 +76,10 @@ namespace MVVMDatagrid
 
                     try
                     {
-                        sound.Stream = Properties.Resources.basic;
-                        //if (sound.Stream == null)
-                        //{
-                        //    sound.Stream = Properties.Resources.basic;
-                        //}
-                        //sound.SoundLocation = @"C:\Users\irini\OneDrive\Робочий стіл\MVVMAlarm\AlarmClock\bin\Debug\sounds.basic2.wav";
+                        if (sound.Stream == null)
+                        {
+                            sound.Stream = Properties.Resources.basic;
+                        }
                         sound.PlayLooping();
                         //dataGrid.Items.Refresh();
                         MessageBox.Show(al.Message);
@@ -178,15 +178,15 @@ namespace MVVMDatagrid
             }
         }
 
-        private ObservableCollection<Employee> _employeeCollection;
+        private ObservableCollection<AlarmClockModel> _employeeCollection;
         //use to bind datagrid
-        public ObservableCollection<Employee> EmployeeCollection
+        public ObservableCollection<AlarmClockModel> EmployeeCollection
         {
             get
             {
                 if (_employeeCollection == null)
                 {
-                    _employeeCollection = new ObservableCollection<Employee>();
+                    _employeeCollection = new ObservableCollection<AlarmClockModel>();
                 }
 
                 return _employeeCollection;
@@ -208,11 +208,8 @@ namespace MVVMDatagrid
                 return saveCommand ??
                   (saveCommand = new RelayCommand(obj =>
                   {
-                      EmployeeCollection.Add(new Employee { Seconds = Seconds, Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
+                      EmployeeCollection.Add(new AlarmClockModel { Seconds = Seconds , Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
 
-                      //Phone phone = new Phone();
-                      //Phones.Insert(0, phone);
-                      //SelectedPhone = phone;
                   }));
             }
         }
@@ -225,30 +222,13 @@ namespace MVVMDatagrid
                   (musicoffCommand = new RelayCommand(obj =>
                   {
                       sound.Stop();
-                      //EmployeeCollection.Add(new Employee { Seconds = Seconds, Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
-
-                      //Phone phone = new Phone();
-                      //Phones.Insert(0, phone);
-                      //SelectedPhone = phone;
+                      
                   }));
             }
         }
-        //public RelayCommand SaveCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(() =>
-        //        {
-        //            if (Seconds != null)
-        //            {
-        //                //clockTimer.Interval = TimeSpan.FromSeconds(1);
-        //                //CreateNewTimer();
-        //                EmployeeCollection.Add(new Employee { Seconds = Seconds, Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
-        //            }
-        //        });
-        //    }
-        private Employee selectedPhone;
-        public Employee SelectedPhone
+       
+        private AlarmClockModel selectedPhone;
+        public AlarmClockModel SelectedPhone
         {
             get { return selectedPhone; }
             set
@@ -265,7 +245,7 @@ namespace MVVMDatagrid
                 return removeCommand ??
                   (removeCommand = new RelayCommand(obj =>
                   {
-                      Employee phone = obj as Employee;
+                      AlarmClockModel phone = obj as AlarmClockModel;
                       if (phone != null)
                       {
                           EmployeeCollection.Remove(phone);
@@ -290,7 +270,7 @@ namespace MVVMDatagrid
                       if (!String.IsNullOrEmpty(xmlString))
                       {
 
-                          XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<Employee>));
+                          XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<AlarmClockModel>));
                           //TextWriter tw = new StreamWriter("alarmClocks.xml");
                           TextWriter txtWriter = new StreamWriter(xmlString);
 
@@ -317,11 +297,9 @@ namespace MVVMDatagrid
                       }
                       if (!String.IsNullOrEmpty(xmlString))
                       {
-                          XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<Employee>));
-
-                          //string xmlString = "alarmClocks.xml";
+                          XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<AlarmClockModel>));
                           StreamReader reader = new StreamReader(xmlString);
-                          EmployeeCollection = (ObservableCollection<Employee>)formatter.Deserialize(reader);
+                          EmployeeCollection = (ObservableCollection<AlarmClockModel>)formatter.Deserialize(reader);
                           reader.Close();
                           //dataGrid.ItemsSource = alarmclock;
                       }
@@ -339,11 +317,10 @@ namespace MVVMDatagrid
                   {
                       SnoozeWindow w = new SnoozeWindow();
                       w.ShowDialog();
-                      //WindowService service = new WindowService();
-                      //service.CreateWindow();
+                      
                       MessageBox.Show(((SnoozeViewModel)w.DataContext).DelayHours.ToString());
                       DateTime currentTime = DateTime.Now;
-                      EmployeeCollection.Add(new Employee()
+                      EmployeeCollection.Add(new AlarmClockModel()
                       {
                           Minutes = currentTime.Minute + ((SnoozeViewModel)w.DataContext).DelayMinutes,
                           Seconds = currentTime.Second + ((SnoozeViewModel)w.DataContext).DelaySeconds,
@@ -364,12 +341,10 @@ namespace MVVMDatagrid
                 return updateCommand ??
                   (updateCommand = new RelayCommand(obj =>
                   {
-                      Employee phone = obj as Employee;
+                      AlarmClockModel phone = obj as AlarmClockModel;
 
                       UpdateWindow w = new UpdateWindow();
                       w.ShowDialog();
-                      //WindowService service = new WindowService();
-                      //service.CreateWindow();
                       MessageBox.Show(((UpdateViewModel)w.DataContext).NewHours.ToString());
 
                       phone.Hours = ((UpdateViewModel)w.DataContext).NewHours;
@@ -381,6 +356,91 @@ namespace MVVMDatagrid
 
                   },
                  (obj) => EmployeeCollection.Count > 0));
+            }
+        }
+        private RelayCommand minutesUpCommand;
+        public RelayCommand MinutesUpCommand
+        {
+            get
+            {
+                return minutesUpCommand ??
+                  (minutesUpCommand = new RelayCommand(obj =>
+                  {
+                      var curMinute = Minutes;
+                      curMinute++;
+                      if (curMinute > maxMinutes)
+                      {
+                          curMinute = 0;
+                          Minutes = curMinute;
+                      }
+                      Minutes = curMinute;
+                  
+                  }));
+
+            }
+        }
+        private RelayCommand minutesDownCommand;
+        public RelayCommand MinutesDownCommand
+        {
+            get
+            {
+                return minutesDownCommand ??
+                  (minutesDownCommand = new RelayCommand(obj =>
+                  {
+                      var curHour = Minutes;
+                      curHour--;
+                      if (curHour < 0)
+                      {
+                          curHour = maxHours;
+                          Minutes = curHour;
+                      }
+                      Minutes = curHour;
+
+
+                  }));
+
+            }
+        }
+        private RelayCommand hoursUpCommand;
+        public RelayCommand HoursUpCommand
+        {
+            get
+            {
+                return hoursUpCommand ??
+                  (hoursUpCommand = new RelayCommand(obj =>
+                  {
+                      var curHour = Hours;
+                      curHour++;
+                      if (curHour > maxHours)
+                      {
+                          curHour = 0;
+                          Hours = curHour;
+                      }
+                      Hours = curHour;
+
+                  }));
+
+            }
+        }
+        private RelayCommand hoursDownCommand;
+        public RelayCommand HoursDownCommand
+        {
+            get
+            {
+                return hoursDownCommand ??
+                  (hoursDownCommand = new RelayCommand(obj =>
+                  {
+                      var curHour = Hours;
+                      curHour--;
+                      if (curHour < 0)
+                      {
+                          curHour = maxHours;
+                          Hours = curHour;
+                      }
+                      Hours= curHour;
+
+                  }));
+
             }
         }
     }

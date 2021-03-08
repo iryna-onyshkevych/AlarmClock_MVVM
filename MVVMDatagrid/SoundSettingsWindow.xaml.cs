@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MVVMDatagrid
+namespace MVVMAlarmClock
 {
     /// <summary>
     /// Interaction logic for SoundSettingsWindow.xaml

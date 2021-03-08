@@ -1,9 +1,9 @@
-﻿<Window x:Class="MVVMDatagrid.SnoozeWindow"
+﻿<Window x:Class="MVVMAlarmClock.SnoozeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MVVMDatagrid"
+        xmlns:local="clr-namespace:MVVMAlarmClock"
         mc:Ignorable="d"
          Title="AlarmSnoozeWindow" ResizeMode="NoResize" Height="150" Width="200">
     <Window.Resources>

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVVMDatagrid
+namespace MVVMAlarmClock
 {
      interface IWindowService
      {
-        void CreateWindow();
         void CloseWindow();
     }
 }
