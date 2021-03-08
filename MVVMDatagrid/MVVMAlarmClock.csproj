@@ -55,18 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AlarmClockModel.cs" />
+    <Compile Include="Models\AlarmClockModel.cs" />
     <Compile Include="IWindowService.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="SnoozeViewModel.cs" />
+    <Compile Include="ViewModels\SnoozeViewModel.cs" />
     <Compile Include="SnoozeWindow.xaml.cs">
       <DependentUpon>SnoozeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SoundSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SoundSettingsViewModel.cs" />
     <Compile Include="SoundSettingsWindow.xaml.cs">
       <DependentUpon>SoundSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UpdateViewModel.cs" />
+    <Compile Include="ViewModels\UpdateViewModel.cs" />
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
@@ -97,7 +97,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyViewModel.cs" />
+    <Compile Include="ViewModels\MyViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,5 +128,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
