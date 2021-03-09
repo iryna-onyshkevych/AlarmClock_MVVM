@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfEmployee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Employee>
+<ArrayOfAlarmClockModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AlarmClockModel>
     <Hours>0</Hours>
     <Minutes>0</Minutes>
     <Seconds>0</Seconds>
     <Date>0001-01-01T00:00:00</Date>
     <IsCalled>false</IsCalled>
-  </Employee>
-  <Employee>
-    <Hours>0</Hours>
-    <Minutes>0</Minutes>
-    <Seconds>0</Seconds>
-    <Date>0001-01-01T00:00:00</Date>
-    <IsCalled>false</IsCalled>
-  </Employee>
-  <Employee>
-    <Hours>0</Hours>
-    <Minutes>0</Minutes>
-    <Seconds>0</Seconds>
-    <Date>0001-01-01T00:00:00</Date>
-    <IsCalled>false</IsCalled>
-  </Employee>
-</ArrayOfEmployee>
+  </AlarmClockModel>
+</ArrayOfAlarmClockModel>

@@ -23,7 +23,6 @@ namespace MVVMAlarmClock
         {
             InitializeComponent();
             DataContext = new UpdateViewModel();
-
         }
     }
 }

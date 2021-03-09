@@ -1,57 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 
 namespace MVVMAlarmClock
 {
-    public class MyViewModel : INotifyPropertyChanged
+    public class AlarmClockViewModel : INotifyPropertyChanged
     {
         public const int maxHours = 23;
         public static int maxMinutes = 59;
-        #region implement INotifyPropertyChanged
         readonly DispatcherTimer timer = new DispatcherTimer();
-        //private DispatcherTimer timer;
         public SoundPlayer sound = new SoundPlayer();
+        private string currentTime;
+        private int seconds;
+        private int minutes;
+        private int hours;
+        private string message;
+        private DateTime date;
+        private bool isCalled;
+        private RelayCommand saveCommand;
+        private RelayCommand musicoffCommand;
+        private RelayCommand snoozeCommand;
+        private RelayCommand removeCommand;
+        private RelayCommand saveListCommand;
+        private RelayCommand showListCommand;
+        private RelayCommand updateCommand;
+        private RelayCommand minutesUpCommand;
+        private RelayCommand minutesDownCommand;
+        private RelayCommand hoursUpCommand;
+        private AlarmClockModel selectedAlarmClock;
+        private RelayCommand hoursDownCommand;
+        private ObservableCollection<AlarmClockModel> alarmClockCollection;
+        public DispatcherTimer _timer;
         public event PropertyChangedEventHandler PropertyChanged;
         public string xmlString = $"{Environment.CurrentDirectory}\\AlarmClockList.xml";
-
-        public void RaisePropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        #endregion
-        private string _currentTime;
-
-        public DispatcherTimer _timer;
-
+       
         public string CurrentTime
         {
             get
             {
-                return this._currentTime;
+                return this.currentTime;
             }
             set
             {
-                if (_currentTime == value)
+                if (currentTime == value)
                     return;
-                _currentTime = value;
+                currentTime = value;
                 RaisePropertyChanged("CurrentTime");
             }
         }
 
-        public MyViewModel()
+        public AlarmClockViewModel()
         {
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer1_Tick;
@@ -64,16 +68,15 @@ namespace MVVMAlarmClock
             };
             _timer.Start();
         }
+
         public void Timer1_Tick(object sender, EventArgs e)
         {
 
             DateTime currentTime = DateTime.Now;
-            foreach (var al in _employeeCollection.ToList<AlarmClockModel>())
+            foreach (var al in alarmClockCollection.ToList<AlarmClockModel>())
             {
-
                 if (currentTime.Hour == al.Hours && currentTime.Minute == al.Minutes && currentTime.Date == al.Date && currentTime.Second == al.Seconds)
                 {
-
                     try
                     {
                         if (sound.Stream == null)
@@ -81,9 +84,7 @@ namespace MVVMAlarmClock
                             sound.Stream = Properties.Resources.basic;
                         }
                         sound.PlayLooping();
-                        //dataGrid.Items.Refresh();
                         MessageBox.Show(al.Message);
-
                     }
                     catch
                     {
@@ -93,114 +94,105 @@ namespace MVVMAlarmClock
                 }
             }
         }
-        private int _seconds;
-        //use to bind textbox
+
         public int Seconds
         {
-            get { return _seconds; }
+            get { return seconds; }
             set
             {
-                if (_seconds != value)
+                if (seconds != value)
                 {
-                    _seconds = value;
+                    seconds = value;
                     RaisePropertyChanged("Seconds");
                 }
             }
         }
-        private int _minutes;
-        //use to bind textbox
+
         public int Minutes
         {
-            get { return _minutes; }
+            get { return minutes; }
             set
             {
-                if (_minutes != value)
+                if (minutes != value)
                 {
-                    _minutes = value;
+                    minutes = value;
                     RaisePropertyChanged("Minutes");
                 }
             }
         }
-        private int _hours;
-        //use to bind textbox
+      
         public int Hours
         {
-            get { return _hours; }
+            get { return hours; }
             set
             {
-                if (_hours != value)
+                if (hours != value)
                 {
-                    _hours = value;
+                    hours = value;
                     RaisePropertyChanged("Hours");
                 }
             }
         }
-        private DateTime _date;
-        //use to bind textbox
+      
         public DateTime Date
         {
-            get { return _date; }
+            get { return date; }
             set
             {
-                if (_date != value)
+                if (date != value)
                 {
-                    _date = value;
+                    date = value;
                     RaisePropertyChanged("Date");
                 }
             }
         }
-        private string _message;
-        //use to bind textbox
+       
         public string Message
         {
-            get { return _message; }
+            get { return message; }
             set
             {
-                if (_message != value)
+                if (message != value)
                 {
-                    _message = value;
+                    message = value;
                     RaisePropertyChanged("Message");
                 }
             }
         }
-        private bool _iscalled;
-        //use to bind textbox
+
         public bool IsCalled
         {
-            get { return _iscalled; }
+            get { return isCalled; }
             set
             {
-                if (_iscalled != value)
+                if (isCalled != value)
                 {
-                    _iscalled = value;
+                    isCalled = value;
                     RaisePropertyChanged("IsCalled");
                 }
             }
         }
 
-        private ObservableCollection<AlarmClockModel> _employeeCollection;
-        //use to bind datagrid
-        public ObservableCollection<AlarmClockModel> EmployeeCollection
+        public ObservableCollection<AlarmClockModel> AlarmClockCollection
         {
             get
             {
-                if (_employeeCollection == null)
+                if (alarmClockCollection == null)
                 {
-                    _employeeCollection = new ObservableCollection<AlarmClockModel>();
+                    alarmClockCollection = new ObservableCollection<AlarmClockModel>();
                 }
-
-                return _employeeCollection;
+                return alarmClockCollection;
             }
             set
             {
-                if (_employeeCollection != value)
+                if (alarmClockCollection != value)
                 {
-                    _employeeCollection = value;
-                    RaisePropertyChanged("EmployeeCollection");
+                    alarmClockCollection = value;
+                    RaisePropertyChanged("AlarmClockCollection");
                 }
             }
         }
-        private RelayCommand saveCommand;
+
         public RelayCommand SaveCommand
         {
             get
@@ -208,12 +200,11 @@ namespace MVVMAlarmClock
                 return saveCommand ??
                   (saveCommand = new RelayCommand(obj =>
                   {
-                      EmployeeCollection.Add(new AlarmClockModel { Seconds = Seconds , Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
-
+                      AlarmClockCollection.Add(new AlarmClockModel { Seconds = Seconds , Minutes = Minutes, Hours = Hours, Date = Date, IsCalled = IsCalled, Message = Message });
                   }));
             }
         }
-        private RelayCommand musicoffCommand;
+
         public RelayCommand MusicOffCommand
         {
             get
@@ -222,22 +213,20 @@ namespace MVVMAlarmClock
                   (musicoffCommand = new RelayCommand(obj =>
                   {
                       sound.Stop();
-                      
                   }));
             }
         }
        
-        private AlarmClockModel selectedPhone;
-        public AlarmClockModel SelectedPhone
+        public AlarmClockModel SelectedAlarmClock
         {
-            get { return selectedPhone; }
+            get { return selectedAlarmClock; }
             set
             {
-                selectedPhone = value;
-                RaisePropertyChanged("SelectedPhone");
+                selectedAlarmClock = value;
+                RaisePropertyChanged("SelectedAlarmClock");
             }
         }
-        private RelayCommand removeCommand;
+
         public RelayCommand RemoveCommand
         {
             get
@@ -245,16 +234,16 @@ namespace MVVMAlarmClock
                 return removeCommand ??
                   (removeCommand = new RelayCommand(obj =>
                   {
-                      AlarmClockModel phone = obj as AlarmClockModel;
-                      if (phone != null)
+                      AlarmClockModel alarmClock = obj as AlarmClockModel;
+                      if (alarmClock != null)
                       {
-                          EmployeeCollection.Remove(phone);
+                          AlarmClockCollection.Remove(alarmClock);
                       }
                   },
-                 (obj) => EmployeeCollection.Count > 0));
+                 (obj) => AlarmClockCollection.Count > 0));
             }
         }
-        private RelayCommand saveListCommand;
+
         public RelayCommand SaveListCommand
         {
             get
@@ -269,20 +258,17 @@ namespace MVVMAlarmClock
                       }
                       if (!String.IsNullOrEmpty(xmlString))
                       {
-
                           XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<AlarmClockModel>));
-                          //TextWriter tw = new StreamWriter("alarmClocks.xml");
                           TextWriter txtWriter = new StreamWriter(xmlString);
-
-                          formatter.Serialize(txtWriter, EmployeeCollection);
+                          formatter.Serialize(txtWriter, AlarmClockCollection);
                           txtWriter.Close();
                           MessageBox.Show("List saved!");
                       }
                   },
-                 (obj) => EmployeeCollection.Count > 0));
+                 (obj) => AlarmClockCollection.Count > 0));
             }
         }
-        private RelayCommand showListCommand;
+
         public RelayCommand ShowListCommand
         {
             get
@@ -299,15 +285,13 @@ namespace MVVMAlarmClock
                       {
                           XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<AlarmClockModel>));
                           StreamReader reader = new StreamReader(xmlString);
-                          EmployeeCollection = (ObservableCollection<AlarmClockModel>)formatter.Deserialize(reader);
+                          AlarmClockCollection = (ObservableCollection<AlarmClockModel>)formatter.Deserialize(reader);
                           reader.Close();
-                          //dataGrid.ItemsSource = alarmclock;
                       }
                   }));
-               
             }
         }
-        private RelayCommand snoozeCommand;
+
         public RelayCommand SnoozeCommand
         {
             get
@@ -317,10 +301,8 @@ namespace MVVMAlarmClock
                   {
                       SnoozeWindow w = new SnoozeWindow();
                       w.ShowDialog();
-                      
-                      MessageBox.Show(((SnoozeViewModel)w.DataContext).DelayHours.ToString());
                       DateTime currentTime = DateTime.Now;
-                      EmployeeCollection.Add(new AlarmClockModel()
+                      AlarmClockCollection.Add(new AlarmClockModel()
                       {
                           Minutes = currentTime.Minute + ((SnoozeViewModel)w.DataContext).DelayMinutes,
                           Seconds = currentTime.Second + ((SnoozeViewModel)w.DataContext).DelaySeconds,
@@ -330,10 +312,10 @@ namespace MVVMAlarmClock
                       sound.Stop();
                       MessageBox.Show("Alarm Clock is snoozed!");
                   },
-                 (obj) => EmployeeCollection.Count > 0));
+                 (obj) => AlarmClockCollection.Count > 0));
             }
         }
-        private RelayCommand updateCommand;
+
         public RelayCommand UpdateCommand
         {
             get
@@ -341,24 +323,19 @@ namespace MVVMAlarmClock
                 return updateCommand ??
                   (updateCommand = new RelayCommand(obj =>
                   {
-                      AlarmClockModel phone = obj as AlarmClockModel;
-
+                      AlarmClockModel alarmClock = obj as AlarmClockModel;
                       UpdateWindow w = new UpdateWindow();
                       w.ShowDialog();
-                      MessageBox.Show(((UpdateViewModel)w.DataContext).NewHours.ToString());
-
-                      phone.Hours = ((UpdateViewModel)w.DataContext).NewHours;
-                      phone.Minutes = ((UpdateViewModel)w.DataContext).NewMinutes;
-                      phone.Seconds = ((UpdateViewModel)w.DataContext).NewSeconds;
-                      phone.Date = ((UpdateViewModel)w.DataContext).NewDate;
-                      phone.Message = ((UpdateViewModel)w.DataContext).NewMessage;
-
-
+                      alarmClock.Hours = ((UpdateViewModel)w.DataContext).NewHours;
+                      alarmClock.Minutes = ((UpdateViewModel)w.DataContext).NewMinutes;
+                      alarmClock.Seconds = ((UpdateViewModel)w.DataContext).NewSeconds;
+                      alarmClock.Date = ((UpdateViewModel)w.DataContext).NewDate;
+                      alarmClock.Message = ((UpdateViewModel)w.DataContext).NewMessage;
                   },
-                 (obj) => EmployeeCollection.Count > 0));
+                 (obj) => AlarmClockCollection.Count > 0));
             }
         }
-        private RelayCommand minutesUpCommand;
+
         public RelayCommand MinutesUpCommand
         {
             get
@@ -374,12 +351,10 @@ namespace MVVMAlarmClock
                           Minutes = curMinute;
                       }
                       Minutes = curMinute;
-                  
                   }));
-
             }
         }
-        private RelayCommand minutesDownCommand;
+
         public RelayCommand MinutesDownCommand
         {
             get
@@ -395,13 +370,10 @@ namespace MVVMAlarmClock
                           Minutes = curHour;
                       }
                       Minutes = curHour;
-
-
                   }));
-
             }
         }
-        private RelayCommand hoursUpCommand;
+
         public RelayCommand HoursUpCommand
         {
             get
@@ -417,12 +389,10 @@ namespace MVVMAlarmClock
                           Hours = curHour;
                       }
                       Hours = curHour;
-
                   }));
-
             }
         }
-        private RelayCommand hoursDownCommand;
+
         public RelayCommand HoursDownCommand
         {
             get
@@ -438,11 +408,15 @@ namespace MVVMAlarmClock
                           Hours = curHour;
                       }
                       Hours= curHour;
-
                   }));
-
+            }
+        }
+        public void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
     }
-
 }

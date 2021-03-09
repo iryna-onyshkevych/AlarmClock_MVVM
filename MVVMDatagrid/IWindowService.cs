@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVVMAlarmClock
 {
-     interface IWindowService
+     public interface IWindowService
      {
         void CloseWindow();
     }

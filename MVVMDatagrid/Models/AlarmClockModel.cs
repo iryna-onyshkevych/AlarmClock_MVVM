@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVVMAlarmClock
 {
     public class AlarmClockModel : INotifyPropertyChanged
     {
-        
-        public event PropertyChangedEventHandler PropertyChanged;
+        private int seconds;
+        private int hours;
+        private int minutes;
+        private DateTime date;
+        private string message;
+        private bool isCalled;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         public void RaisePropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -19,88 +21,81 @@ namespace MVVMAlarmClock
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        
-
-        
        
-        private int _hours;
-        //use to bind textbox
         public int Hours
         {
-            get { return _hours; }
+            get { return hours; }
             set
             {
-                if (_hours != value)
+                if (hours != value)
                 {
-                    _hours = value;
+                    hours = value;
+                    RaisePropertyChanged("Hours");
                 }
             }
         }
-        private int _minutes;
-        //use to bind textbox
+
         public int Minutes
         {
-            get { return _minutes; }
+            get { return minutes; }
             set
             {
-                if (_minutes != value)
+                if (minutes != value)
                 {
-                    _minutes = value;
+                    minutes = value;
+                    RaisePropertyChanged("Minutes");
                 }
             }
         }
 
-        private int _seconds;
-
-        //use to binding textbox
         public int Seconds
         {
-            get { return _seconds; }
+            get { return seconds; }
             set
             {
-                if (_seconds != value)
+                if (seconds != value)
                 {
-                    _seconds = value;
-
+                    seconds = value;
+                    RaisePropertyChanged("Seconds");
                 }
             }
         }
-        private DateTime _date;
-        //use to bind textbox
+
         public DateTime Date
         {
-            get { return _date; }
+            get { return date; }
             set
             {
-                if (_date != value)
+                if (date != value)
                 {
-                    _date = value;
+                    date = value;
+                    RaisePropertyChanged("Date");
                 }
             }
         }
-        private string _message;
-        //use to bind textbox
+
         public string Message
         {
-            get { return _message; }
+            get { return message; }
             set
             {
-                if (_message != value)
+                if (message != value)
                 {
-                    _message = value;
+                    message = value;
+                    RaisePropertyChanged("Message");
                 }
             }
         }
-        private bool _iscalled;
-        //use to bind textbox
+
         public bool IsCalled
         {
-            get { return _iscalled; }
+            get { return isCalled; }
             set
             {
-                if (_iscalled != value)
+                if (isCalled != value)
                 {
-                    _iscalled = value;
+                    isCalled = value;
+                    RaisePropertyChanged("IsCalled");
                 }
             }
         }

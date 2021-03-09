@@ -1,72 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.ComponentModel;
 
 namespace MVVMAlarmClock
 {
     public class SnoozeViewModel : INotifyPropertyChanged
     {
+        private int delaySeconds { get; set; }
+        private int delayMinutes { get; set; }
+        private int delayHours { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
-        public string xmlString = $"{Environment.CurrentDirectory}\\AlarmClockList.xml";
 
-        public void RaisePropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        private int _delayMinutes { get; set; }
-
-        //use to binding textbox
         public int DelayMinutes
         {
-            get { return _delayMinutes; }
+            get { return delayMinutes; }
             set
             {
-                if (_delayMinutes != value)
+                if (delayMinutes != value)
                 {
-                    _delayMinutes = value;
+                    delayMinutes = value;
                     RaisePropertyChanged("DelayMinutes");
                 }
             }
         }
-        private int _delayHours { get; set; }
 
         public int DelayHours
         {
-            get { return _delayHours; }
+            get { return delayHours; }
             set
             {
-                if (_delayHours != value)
+                if (delayHours != value)
                 {
-                    _delayHours = value;
+                    delayHours = value;
                     RaisePropertyChanged("DelayHours");
-
                 }
             }
         }
-        private int _delaySeconds { get; set; }
 
         public int DelaySeconds
         {
-            get { return _delaySeconds; }
+            get { return delaySeconds; }
             set
             {
-                if (_delaySeconds != value)
+                if (delaySeconds != value)
                 {
-                    _delaySeconds = value;
+                    delaySeconds = value;
                     RaisePropertyChanged("DelaySeconds");
-
                 }
             }
         }
-        //SnoozeModel snooze = new SnoozeModel();
-        //public int ggminutes;
+       
         private RelayCommand okCommand;
         public RelayCommand OkCommand
         {
@@ -84,6 +66,13 @@ namespace MVVMAlarmClock
                       //WindowService service = new WindowService();
                       //service.CloseWindow();
                   }));
+            }
+        }
+        public void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
     }

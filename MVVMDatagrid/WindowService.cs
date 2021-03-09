@@ -8,7 +8,6 @@ namespace MVVMAlarmClock
 {
     public class WindowService : IWindowService
     {
-       
         public void CloseWindow()
         {
         }

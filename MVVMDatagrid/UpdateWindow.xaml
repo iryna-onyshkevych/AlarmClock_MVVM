@@ -22,7 +22,6 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-
         </Grid.RowDefinitions>
         <Label Grid.Row="0">Hour</Label>
         <TextBox Grid.Row="0" Name="alhour" Margin="60,0,0,0" Text="{Binding NewHours}" ></TextBox>
@@ -36,5 +35,4 @@
         <TextBox Grid.Row="4" Name="almessage" Margin="60,0,0,0" Text="{Binding NewMessage}" ></TextBox>
         <Button Grid.Row="5" Name="Submit"  Background="AliceBlue" FontFamily="Constantia">OK</Button>
     </Grid>
-
 </Window>
